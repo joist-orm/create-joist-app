@@ -1,27 +1,29 @@
+import expect from "expect";
 import { newPgConnectionConfig } from "joist-orm";
 import { PostgresDriver } from "joist-orm/pg";
 import { toMatchEntity } from "joist-orm/tests";
-import knex, { Knex } from "knex";
+import pg from "pg";
+import { Context } from "./context";
 import { EntityManager } from "./entities";
 
 expect.extend({ toMatchEntity });
 
-let db: Knex;
+let pool: pg.Pool;
 let em: EntityManager;
 
 beforeAll(async () => {
-  const config = newPgConnectionConfig();
-  db = knex({ client: "pg", connection: config });
+  pool = new pg.Pool(newPgConnectionConfig());
 });
 
 beforeEach(async () => {
-  await db.select(db.raw("flush_database()"));
-  const driver = new PostgresDriver(db);
-  em = new EntityManager({}, driver);
+  await pool.query("select flush_database()");
+  const driver = new PostgresDriver(pool);
+  const ctx = { pool, em: null as any } satisfies Context;
+  em = new EntityManager(ctx, driver);
 });
 
 afterAll(async () => {
-  await db.destroy();
+  await pool.end();
 });
 
 export function getEm(): EntityManager {

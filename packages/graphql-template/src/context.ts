@@ -1,21 +1,14 @@
-import { EntityManager } from "joist-orm";
-import { entities } from "./entities";
+import { EntityManager, newPgConnectionConfig } from "joist-orm";
+import { PostgresDriver } from "joist-orm/pg";
+import { Pool } from "pg";
 
 export interface Context {
+  pool: Pool;
   em: EntityManager;
 }
 
-export function newContext(em: EntityManager): Context {
-  return { em };
-}
-
-export async function createEntityManager(): Promise<EntityManager> {
-  const { newPgConnectionConfig } = await import("joist-orm/pg");
-  const { newEntityManager } = await import("joist-orm");
-  const knex = (await import("knex")).default;
-
-  const config = newPgConnectionConfig();
-  const driver = knex({ client: "pg", connection: config });
-
-  return newEntityManager({ entities, driver });
+export function newContext(): Context {
+  const pool = new Pool(newPgConnectionConfig());
+  const em = new EntityManager({}, new PostgresDriver(pool));
+  return { em, pool };
 }
