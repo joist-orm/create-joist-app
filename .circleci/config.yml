@@ -4,6 +4,13 @@ jobs:
   build-and-test:
     docker:
       - image: cimg/node:24.12.0
+      - image: cimg/postgres:16.0
+        environment:
+          POSTGRES_USER: joist
+          POSTGRES_PASSWORD: local
+          POSTGRES_DB: joist_dev
+    environment:
+      DATABASE_URL: postgres://joist:local@localhost:5432/joist_dev
     steps:
       - checkout
       - run:
@@ -11,25 +18,46 @@ jobs:
           command: corepack enable
       - restore_cache:
           keys:
-            - v1-deps-{{ checksum "yarn.lock" }}
-            - v1-deps-
+            - v2-deps-{{ checksum "yarn.lock" }}
+            - v2-deps-
       - run:
           name: Install dependencies
           command: yarn install --immutable
       - save_cache:
-          key: v1-deps-{{ checksum "yarn.lock" }}
+          key: v2-deps-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
             - .yarn/cache
       - run:
-          name: Build
-          command: yarn build
+          name: Wait for database
+          command: |
+            for i in $(seq 1 30); do
+              pg_isready -h localhost -U joist && break
+              sleep 1
+            done
       - run:
-          name: Test
-          command: yarn test
+          name: Run migrations
+          command: node --import tsx node_modules/.bin/joist-pg-migrate
       - run:
-          name: Test scaffolded project
-          command: yarn test:scaffolded
+          name: Run codegen (basic-template)
+          command: node node_modules/joist-codegen/build/index.js
+          working_directory: packages/basic-template
+      - run:
+          name: Run codegen (graphql-template)
+          command: node node_modules/joist-codegen/build/index.js
+          working_directory: packages/graphql-template
+      - run:
+          name: Build CLI
+          command: yarn workspace create-joist-app run build
+      - run:
+          name: Test CLI
+          command: yarn workspace create-joist-app run test
+      - run:
+          name: Test basic-template
+          command: yarn workspace basic-template run test
+      - run:
+          name: Test graphql-template
+          command: yarn workspace graphql-template run test
 
 workflows:
   ci:

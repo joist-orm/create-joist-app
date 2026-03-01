@@ -1,52 +1,24 @@
 {
-  "name": "create-joist-app",
-  "version": "2.0.3",
-  "description": "Create a new Joist ORM project with a single command",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/joist-orm/joist-orm.git",
-    "directory": "packages/create-joist-app"
-  },
-  "keywords": [
-    "joist",
-    "orm",
-    "typescript",
-    "postgresql",
-    "scaffolding",
-    "cli"
-  ],
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
-  "bin": "./build/index.js",
-  "files": [
-    "build",
-    "templates"
+  "name": "create-joist-app-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
   "scripts": {
-    "build": "tsc",
-    "test": "jest",
-    "test:scaffolded": "./scripts/test-scaffolded-project.sh",
-    "format": "prettier --write 'src/**/*.{ts,js}'"
-  },
-  "dependencies": {
-    "commander": "^12.1.0",
-    "picocolors": "^1.1.1",
-    "prompts": "^2.4.2",
-    "validate-npm-package-name": "^6.0.2"
+    "build": "yarn workspaces foreach -A run build",
+    "test": "yarn workspaces foreach -A run test",
+    "db": "docker compose up -d db && yarn db:wait && yarn migrate && yarn codegen",
+    "db:wait": "node -e \"const { execSync } = require('child_process'); let i = 0; while (i++ < 30) { try { execSync('docker compose exec db pg_isready -U joist', { stdio: 'ignore' }); process.exit(0); } catch { execSync('sleep 1'); } } process.exit(1);\"",
+    "migrate": "env-cmd node --import tsx node_modules/.bin/joist-pg-migrate",
+    "codegen": "yarn workspace basic-template run codegen && yarn workspace graphql-template run codegen",
+    "format": "prettier --write '**/*.{ts,js}' --ignore-path .gitignore"
   },
   "devDependencies": {
-    "@swc/core": "^1.15.18",
-    "@swc/jest": "^0.2.39",
-    "@tsconfig/node20": "^20.1.9",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^24.11.0",
-    "@types/prompts": "^2.4.9",
-    "@types/validate-npm-package-name": "^4.0.2",
-    "jest": "30.2.0",
+    "env-cmd": "^11.0.0",
+    "joist-migration-utils": "^2.0.3",
     "prettier": "^3.8.1",
     "prettier-plugin-organize-imports": "^4.3.0",
-    "typescript": "5.9.3"
+    "tsx": "^4.20.0"
   },
   "engines": {
     "node": ">=18.0.0"
