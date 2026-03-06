@@ -7,10 +7,9 @@
   "scripts": {
     "build": "yarn workspaces foreach -A run build",
     "test": "yarn workspaces foreach -A run test",
-    "db": "docker compose up -d db && yarn db:wait && yarn migrate && yarn codegen",
-    "db:wait": "node -e \"const { execSync } = require('child_process'); let i = 0; while (i++ < 30) { try { execSync('docker compose exec db pg_isready -U joist', { stdio: 'ignore' }); process.exit(0); } catch { execSync('sleep 1'); } } process.exit(1);\"",
+    "db": "docker compose up -d db && yarn migrate && yarn codegen",
     "migrate": "env-cmd node --import tsx node_modules/.bin/joist-pg-migrate",
-    "codegen": "yarn workspace basic-template run codegen && yarn workspace graphql-template run codegen",
+    "codegen": "env-cmd yarn workspace basic-template run codegen && yarn workspace graphql-template run codegen",
     "format": "prettier --write '**/*.{ts,js}' --ignore-path .gitignore"
   },
   "devDependencies": {

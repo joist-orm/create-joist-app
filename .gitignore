@@ -26,17 +26,5 @@ junit*.xml
 
 **/.claude/settings.local.json
 
-# Generated joist codegen files
-**/src/entities/codegen/
-
-# Template .env files (contain local dev values)
-packages/basic-template/.env
-packages/graphql-template/.env
-# Root .env
-.env
-
-# Generated graphql types
-**/src/generated/
-
 # Prepublish generated templates dir
 packages/create-joist-app/templates/

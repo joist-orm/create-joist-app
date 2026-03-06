@@ -1,13 +1,30 @@
 FROM postgres:16
 
 # Script to reset the database
-RUN echo '#!/bin/bash\nset -e\npsql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname postgres <<-EOSQL\n  DROP DATABASE IF EXISTS "$POSTGRES_DB";\n  CREATE DATABASE "$POSTGRES_DB";\nEOSQL' > /docker-entrypoint-initdb.d/reset.sh \
-    && chmod +x /docker-entrypoint-initdb.d/reset.sh
+COPY <<EOF /docker-entrypoint-initdb.d/reset.sh
+#!/bin/bash
+set -e
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname postgres <<-EOSQL
+  DROP DATABASE IF EXISTS "$POSTGRES_DB";
+  CREATE DATABASE "$POSTGRES_DB";
+EOSQL
+EOF
+RUN chmod +x /docker-entrypoint-initdb.d/reset.sh
 
 # Copy reset script to accessible location
-RUN echo '#!/bin/bash\nset -e\npsql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname postgres <<-EOSQL\n  DROP DATABASE IF EXISTS "$POSTGRES_DB";\n  CREATE DATABASE "$POSTGRES_DB";\nEOSQL' > /reset.sh \
-    && chmod +x /reset.sh
+COPY <<EOF /reset.sh
+#!/bin/bash
+set -e
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname postgres <<-EOSQL
+  DROP DATABASE IF EXISTS "$POSTGRES_DB";
+  CREATE DATABASE "$POSTGRES_DB";
+EOSQL
+EOF
+RUN chmod +x /reset.sh
 
 # Console script for easy database access
-RUN echo '#!/bin/bash\npsql -U "$POSTGRES_USER" -d "$POSTGRES_DB"' > /console.sh \
-    && chmod +x /console.sh
+COPY <<EOF /console.sh
+#!/bin/bash
+psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+EOF
+RUN chmod +x /console.sh
