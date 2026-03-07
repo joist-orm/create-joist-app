@@ -40,11 +40,11 @@ jobs:
           command: node --import tsx node_modules/.bin/joist-pg-migrate
       - run:
           name: Run codegen (basic-template)
-          command: node node_modules/joist-codegen/build/index.js
+          command: yarn codegen
           working_directory: packages/basic-template
       - run:
           name: Run codegen (graphql-template)
-          command: node node_modules/joist-codegen/build/index.js
+          command: yarn codegen
           working_directory: packages/graphql-template
       - run:
           name: Build CLI
