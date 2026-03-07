@@ -10,13 +10,21 @@
     "db": "docker compose up -d db && yarn migrate && yarn codegen",
     "migrate": "env-cmd node --import tsx node_modules/.bin/joist-pg-migrate",
     "codegen": "env-cmd yarn workspace basic-template run codegen && yarn workspace graphql-template run codegen",
-    "format": "prettier --write '**/*.{ts,js}' --ignore-path .gitignore"
+    "format": "prettier --write '**/*.{ts,js}' --ignore-path .gitignore",
+    "release": "semantic-release"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/commit-analyzer": "13.0.1",
+    "@semantic-release/exec": "7.1.0",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/github": "12.0.6",
+    "@semantic-release/release-notes-generator": "14.1.0",
     "env-cmd": "^11.0.0",
     "joist-migration-utils": "^2.0.3",
     "prettier": "^3.8.1",
     "prettier-plugin-organize-imports": "^4.3.0",
+    "semantic-release": "25.0.3",
     "tsx": "^4.20.0"
   },
   "engines": {

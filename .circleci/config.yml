@@ -59,7 +59,35 @@ jobs:
           name: Test graphql-template
           command: yarn workspace graphql-template run test
 
+  release:
+    docker:
+      - image: cimg/node:24.12.0
+    steps:
+      - checkout
+      - run:
+          name: Enable Corepack
+          command: corepack enable
+      - restore_cache:
+          keys:
+            - v2-deps-{{ checksum "yarn.lock" }}
+            - v2-deps-
+      - run:
+          name: Install dependencies
+          command: yarn install --immutable
+      - run:
+          name: Build CLI
+          command: yarn workspace create-joist-app run build
+      - run:
+          name: Release
+          command: yarn release
+
 workflows:
   ci:
     jobs:
       - build-and-test
+      - release:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: main
