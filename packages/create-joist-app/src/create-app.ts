@@ -82,7 +82,7 @@ export async function createApp(options: CreateAppOptions): Promise<void> {
   replaceSentinelValues(projectPath, { [templatePkgName]: projectName });
 
   // Update package.json with project name and add scaffolding scripts
-  updatePackageJson(projectPath, projectName, dbConfig);
+  updatePackageJson(projectPath, projectName);
 
   // Add package manager specific files
   if (packageManager === "yarn") {
