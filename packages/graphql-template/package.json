@@ -7,7 +7,7 @@
     "start": "tsx src/server.ts",
     "dev": "tsx watch src/server.ts",
     "test": "env-cmd jest --runInBand",
-    "codegen": "env-cmd node ../../node_modules/joist-codegen/build/index.js && yarn graphql-codegen",
+    "codegen": "env-cmd yarn joist-codegen && yarn graphql-codegen",
     "graphql-codegen": "graphql-codegen",
     "format": "prettier --write \"src/**/*.{ts,tsx,graphql}\""
   },

@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "test": "env-cmd jest --runInBand",
-    "codegen": "env-cmd node ../../node_modules/joist-codegen/build/index.js",
+    "codegen": "env-cmd yarn joist-codegen",
     "format": "prettier --write \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
