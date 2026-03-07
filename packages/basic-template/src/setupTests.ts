@@ -9,7 +9,6 @@ import { EntityManager } from "./entities";
 expect.extend({ toMatchEntity });
 
 let pool: pg.Pool;
-let em: EntityManager;
 
 beforeAll(async () => {
   pool = new pg.Pool(newPgConnectionConfig());
@@ -17,15 +16,14 @@ beforeAll(async () => {
 
 beforeEach(async () => {
   await pool.query("select flush_database()");
-  const driver = new PostgresDriver(pool);
-  const ctx = { pool, em: null as any } satisfies Context;
-  em = new EntityManager(ctx, driver);
 });
 
 afterAll(async () => {
   await pool.end();
 });
 
-export function getEm(): EntityManager {
-  return em;
+export function newEm(): EntityManager {
+  const driver = new PostgresDriver(pool);
+  const ctx = { pool, em: null as any } satisfies Context;
+  return new EntityManager(ctx, driver);
 }

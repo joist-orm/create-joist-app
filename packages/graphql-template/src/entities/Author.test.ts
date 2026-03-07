@@ -1,9 +1,9 @@
-import { getEm } from "../setupTests";
+import { newEm } from "../setupTests";
 import { newAuthor, newBook } from "./factories";
 
 describe("Author", () => {
   it("can create an author", async () => {
-    const em = getEm();
+    const em = newEm();
     const author = newAuthor(em, { firstName: "John", lastName: "Doe" });
     await em.flush();
 
@@ -12,19 +12,19 @@ describe("Author", () => {
   });
 
   it("has a full name", async () => {
-    const em = getEm();
+    const em = newEm();
     const author = newAuthor(em, { firstName: "Jane", lastName: "Smith" });
     expect(author.fullName).toBe("Jane Smith");
   });
 
   it("handles missing last name in fullName", async () => {
-    const em = getEm();
+    const em = newEm();
     const author = newAuthor(em, { firstName: "Jane" });
     expect(author.fullName).toBe("Jane");
   });
 
   it("can have books", async () => {
-    const em = getEm();
+    const em = newEm();
     const author = newAuthor(em, { firstName: "Test", lastName: "Author" });
     const book = newBook(em, { title: "Test Book", author });
     await em.flush();
