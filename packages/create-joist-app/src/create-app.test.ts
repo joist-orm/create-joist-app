@@ -139,11 +139,11 @@ describe("createApp", () => {
 
       // Check GraphQL-specific files
       expect(fs.existsSync(path.join(projectPath, "codegen.yml"))).toBe(true);
-      expect(fs.existsSync(path.join(projectPath, "src/root.graphql"))).toBe(true);
+      expect(fs.existsSync(path.join(projectPath, "schema/root.graphql"))).toBe(true);
       expect(fs.existsSync(path.join(projectPath, "src/server.ts"))).toBe(true);
       expect(fs.existsSync(path.join(projectPath, "src/resolvers/index.ts"))).toBe(true);
-      expect(fs.existsSync(path.join(projectPath, "src/resolvers/authorResolvers.ts"))).toBe(true);
-      expect(fs.existsSync(path.join(projectPath, "src/resolvers/bookResolvers.ts"))).toBe(true);
+      expect(fs.existsSync(path.join(projectPath, "src/resolvers/author/authorResolvers.ts"))).toBe(true);
+      expect(fs.existsSync(path.join(projectPath, "src/resolvers/book/bookResolvers.ts"))).toBe(true);
     });
 
     it("includes graphql codegen plugin in joist-config", async () => {
