@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 
 export function createDbDockerfile(projectPath: string): void {
-  const dbDockerfile = `FROM postgres:16
+  const dbDockerfile = `FROM postgres:18
 
 # Script to reset the database
 COPY <<EOF /docker-entrypoint-initdb.d/reset.sh
