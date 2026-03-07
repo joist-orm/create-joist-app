@@ -5,8 +5,6 @@ extend type Mutation {
 type Book {
   id: ID!
   title: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
   author: Author!
 }
 

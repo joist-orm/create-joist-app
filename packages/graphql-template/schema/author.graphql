@@ -6,8 +6,6 @@ type Author {
   id: ID!
   firstName: String!
   lastName: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
   books: [Book!]!
 }
 

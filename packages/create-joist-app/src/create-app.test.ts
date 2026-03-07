@@ -139,7 +139,7 @@ describe("createApp", () => {
 
       // Check GraphQL-specific files
       expect(fs.existsSync(path.join(projectPath, "codegen.yml"))).toBe(true);
-      expect(fs.existsSync(path.join(projectPath, "src/schema.graphql"))).toBe(true);
+      expect(fs.existsSync(path.join(projectPath, "src/root.graphql"))).toBe(true);
       expect(fs.existsSync(path.join(projectPath, "src/server.ts"))).toBe(true);
       expect(fs.existsSync(path.join(projectPath, "src/resolvers/index.ts"))).toBe(true);
       expect(fs.existsSync(path.join(projectPath, "src/resolvers/authorResolvers.ts"))).toBe(true);

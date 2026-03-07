@@ -3,7 +3,9 @@ import { makeRunInputMutation } from "src/resolvers/testUtils";
 
 describe("saveAuthor", () => {
   it.withCtx("can create", async (ctx) => {
-    const result = await runSave(ctx, () => ({}));
+    const result = await runSave(ctx, () => ({
+      firstName: "Test",
+    }));
     expect(result).toBeDefined();
   });
 });

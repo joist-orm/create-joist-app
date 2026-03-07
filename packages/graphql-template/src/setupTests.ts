@@ -31,7 +31,7 @@ export function newEm(): EntityManager {
   return em;
 }
 
-export async function createTestContext(): Promise<Context> {
+export async function createTestContext(opts: {}): Promise<Context> {
   const em = newEm();
   return em.ctx;
 }
