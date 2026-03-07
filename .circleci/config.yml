@@ -15,7 +15,7 @@ jobs:
       - checkout
       - run:
           name: Enable Corepack
-          command: corepack enable
+          command: sudo corepack enable
       - restore_cache:
           keys:
             - v2-deps-{{ checksum "yarn.lock" }}
@@ -66,7 +66,7 @@ jobs:
       - checkout
       - run:
           name: Enable Corepack
-          command: corepack enable
+          command: sudo corepack enable
       - restore_cache:
           keys:
             - v2-deps-{{ checksum "yarn.lock" }}
