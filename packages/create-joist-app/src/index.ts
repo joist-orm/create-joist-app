@@ -37,7 +37,7 @@ async function main() {
     .version(packageJson.version)
     .description("Create a new Joist ORM project")
     .argument("[project-directory]", "Directory to create the project in")
-    .option("-t, --template <template>", "Template to use (basic, graphql)", "basic")
+    .option("-t, --template <template>", "Template to use (basic, graphql)")
     .option("--use-yarn", "Use Yarn as the package manager")
     .option("--use-npm", "Use npm as the package manager")
     .option("--use-pnpm", "Use pnpm as the package manager")
@@ -125,46 +125,6 @@ async function main() {
     process.exit(1);
   }
 
-  // Determine template
-  let template: Template = (opts.template as Template) || "basic";
-  if (!opts.yes && !opts.template) {
-    const response = await prompts({
-      type: "select",
-      name: "template",
-      message: "Which template would you like to use?",
-      choices: [
-        { title: "Basic", value: "basic", description: "A minimal Joist project with entities" },
-        {
-          title: "GraphQL",
-          value: "graphql",
-          description: "Joist with GraphQL server and resolvers",
-        },
-      ],
-      initial: 0,
-    });
-
-    if (!response.template) {
-      console.log(pc.red("Cancelled."));
-      process.exit(1);
-    }
-
-    template = response.template;
-  }
-
-  // Determine package manager
-  let packageManager: PackageManager;
-  if (opts.useYarn) {
-    packageManager = "yarn";
-  } else if (opts.useNpm) {
-    packageManager = "npm";
-  } else if (opts.usePnpm) {
-    packageManager = "pnpm";
-  } else if (opts.useBun) {
-    packageManager = "bun";
-  } else {
-    packageManager = getPackageManager();
-  }
-
   // Get database configuration
   let dbConfig = {
     host: opts.dbHost || "localhost",
@@ -200,6 +160,66 @@ async function main() {
       name: response.dbName || dbConfig.name,
       user: response.dbUser || dbConfig.user,
     };
+  }
+
+  // Determine template
+  let template: Template = (opts.template as Template) || "basic";
+  if (!opts.yes && !opts.template) {
+    const response = await prompts({
+      type: "select",
+      name: "template",
+      message: "Which template would you like to use?",
+      choices: [
+        { title: "Basic", value: "basic", description: "A minimal Joist project with entities" },
+        {
+          title: "GraphQL",
+          value: "graphql",
+          description: "Joist with GraphQL server and resolvers",
+        },
+      ],
+      initial: 0,
+    });
+
+    if (response.template === undefined) {
+      console.log(pc.red("Cancelled."));
+      process.exit(1);
+    }
+
+    template = response.template;
+  }
+
+  // Determine package manager
+  let packageManager: PackageManager;
+  if (opts.useYarn) {
+    packageManager = "yarn";
+  } else if (opts.useNpm) {
+    packageManager = "npm";
+  } else if (opts.usePnpm) {
+    packageManager = "pnpm";
+  } else if (opts.useBun) {
+    packageManager = "bun";
+  } else if (opts.yes) {
+    packageManager = getPackageManager();
+  } else {
+    const response = await prompts({
+      type: "select",
+      name: "packageManager",
+      message: "Which package manager would you like to use?",
+      choices: [
+        { title: "npm", value: "npm" },
+        { title: "yarn", value: "yarn" },
+        { title: "pnpm", value: "pnpm" },
+        { title: "bun", value: "bun" },
+      ],
+      initial: 0,
+    });
+
+    if (response.packageManager === undefined) {
+      console.log(pc.red("Cancelled."));
+      process.exit(1);
+    }
+
+    packageManager = response.packageManager;
   }
 
   console.log();
