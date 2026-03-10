@@ -7,7 +7,7 @@ module.exports = {
     [
       "@semantic-release/exec",
       {
-        prepareCmd: "yarn workspace create-joist-app version ${nextRelease.version}",
+        prepareCmd: "bash scripts/prepublish.sh && yarn workspace create-joist-app version ${nextRelease.version}",
         publishCmd: "yarn workspace create-joist-app npm publish",
       },
     ],
