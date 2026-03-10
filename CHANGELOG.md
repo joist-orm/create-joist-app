@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/joist-orm/create-joist-app/compare/v1.0.0...v1.0.1) (2026-03-10)
+
+
+### Bug Fixes
+
+* Don't use rsync. ([9b51727](https://github.com/joist-orm/create-joist-app/commit/9b5172747a4ad8ed7ede05534fe27d486c2f14c4))
+* Run prepublish.sh manually. ([0e65e48](https://github.com/joist-orm/create-joist-app/commit/0e65e48e51188694063e89fe732db2e3f025be95))
+
 # 1.0.0 (2026-03-08)
 
 
