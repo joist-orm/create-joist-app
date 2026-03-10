@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/joist-orm/create-joist-app/compare/v1.0.1...v1.0.2) (2026-03-10)
+
+
+### Bug Fixes
+
+* Fix template/package manager prompts missing. ([6d0eded](https://github.com/joist-orm/create-joist-app/commit/6d0ededf29c12c30d6f23aeb5341cf7c8f36146f))
+
 ## [1.0.1](https://github.com/joist-orm/create-joist-app/compare/v1.0.0...v1.0.1) (2026-03-10)
 
 
