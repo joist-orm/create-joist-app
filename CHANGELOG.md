@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/joist-orm/create-joist-app/compare/v1.0.3...v1.0.4) (2026-03-12)
+
+
+### Bug Fixes
+
+* Bump joist, dependencies. ([#2](https://github.com/joist-orm/create-joist-app/issues/2)) ([6a8dcaf](https://github.com/joist-orm/create-joist-app/commit/6a8dcaff3aab5deb152d3e87491f8cd22863861d))
+
 ## [1.0.3](https://github.com/joist-orm/create-joist-app/compare/v1.0.2...v1.0.3) (2026-03-12)
 
 
