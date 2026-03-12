@@ -22,11 +22,10 @@
     "@semantic-release/github": "12.0.6",
     "@semantic-release/release-notes-generator": "14.1.0",
     "env-cmd": "^11.0.0",
-    "joist-migration-utils": "^2.0.3",
     "prettier": "^3.8.1",
     "prettier-plugin-organize-imports": "^4.3.0",
     "semantic-release": "25.0.3",
-    "tsx": "^4.20.0"
+    "tsx": "^4.21.0"
   },
   "engines": {
     "node": ">=18.0.0"
