@@ -1,7 +1,7 @@
+import type { EntityManager } from "joist-orm";
 import { newPgConnectionConfig } from "joist-orm";
 import { PostgresDriver } from "joist-orm/pg";
 import { Pool } from "pg";
-import type { EntityManager } from "./entities";
 
 /** The app-wide global context, created once on boot & shared across all requests. */
 export interface AppContext {
