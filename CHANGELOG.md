@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/joist-orm/create-joist-app/compare/v1.0.5...v1.0.6) (2026-03-12)
+
+
+### Bug Fixes
+
+* Use two contexts. ([#4](https://github.com/joist-orm/create-joist-app/issues/4)) ([4a531bc](https://github.com/joist-orm/create-joist-app/commit/4a531bca6ec47e93169062a7b85b293fe25003a1))
+
 ## [1.0.5](https://github.com/joist-orm/create-joist-app/compare/v1.0.4...v1.0.5) (2026-03-12)
 
 

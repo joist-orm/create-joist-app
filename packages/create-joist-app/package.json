@@ -1,6 +1,6 @@
 {
   "name": "create-joist-app",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Create a new Joist ORM project with a single command",
   "license": "MIT",
   "repository": {
