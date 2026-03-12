@@ -1,13 +1,10 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { loadSchemaSync } from "@graphql-tools/load";
 import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
-import { EntityManager } from "joist-orm";
-import { newPgConnectionConfig } from "joist-orm/pg";
-import knex from "knex";
+import { loadSchemaSync } from "@graphql-tools/load";
 import path from "path";
-import { Context } from "./context";
-import { entities } from "./entities";
+import { Context, newAppContext } from "./context";
+import { EntityManager } from "./entities";
 import { resolvers } from "./resolvers";
 
 const typeDefs = loadSchemaSync(path.join(__dirname, "./**/*.graphql"), {
@@ -15,22 +12,17 @@ const typeDefs = loadSchemaSync(path.join(__dirname, "./**/*.graphql"), {
 });
 
 async function main() {
-  const config = newPgConnectionConfig();
-  const db = knex({ client: "pg", connection: config });
-
-  const server = new ApolloServer<Context>({
-    typeDefs,
-    resolvers,
-  });
-
+  const appContext = newAppContext();
+  const server = new ApolloServer<Context>({ typeDefs, resolvers });
   const { url } = await startStandaloneServer(server, {
     listen: { port: parseInt(process.env.PORT || "4000") },
     context: async () => {
-      const em = new EntityManager({ entities, driver: db }, {});
-      return { em };
+      const ctx = { ...appContext, em: null as any } satisfies Context;
+      const em = new EntityManager(ctx, appContext.driver);
+      Object.assign(ctx, { em });
+      return ctx;
     },
   });
-
   console.log(`🚀 Server ready at ${url}`);
 }
 
