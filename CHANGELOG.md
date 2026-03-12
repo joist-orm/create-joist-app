@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/joist-orm/create-joist-app/compare/v1.0.6...v1.0.7) (2026-03-12)
+
+
+### Bug Fixes
+
+* Get GraphQL running. ([#5](https://github.com/joist-orm/create-joist-app/issues/5)) ([1e79daf](https://github.com/joist-orm/create-joist-app/commit/1e79daf2b886dafe310fa9d7f8823a94719e9c07))
+
 ## [1.0.6](https://github.com/joist-orm/create-joist-app/compare/v1.0.5...v1.0.6) (2026-03-12)
 
 
