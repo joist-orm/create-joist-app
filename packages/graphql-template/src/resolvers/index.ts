@@ -1,15 +1,9 @@
-import { authorResolvers } from "./authorResolvers";
-import { bookResolvers } from "./bookResolvers";
+import { enumResolvers } from "src/resolvers/enumResolvers";
+import { mutationResolvers } from "src/resolvers/mutations";
+import { objectResolvers } from "src/resolvers/objects";
 
 export const resolvers = {
-  Query: {
-    ...authorResolvers.Query,
-    ...bookResolvers.Query,
-  },
-  Mutation: {
-    ...authorResolvers.Mutation,
-    ...bookResolvers.Mutation,
-  },
-  Author: authorResolvers.Author,
-  Book: bookResolvers.Book,
+  ...enumResolvers,
+  ...objectResolvers,
+  Mutation: mutationResolvers,
 };

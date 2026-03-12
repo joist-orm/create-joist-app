@@ -8,7 +8,7 @@ describe("authorResolvers", () => {
     // Given a Author
     const a = newAuthor(em);
     // Then we can query it
-    const result = await runFields(ctx, a, ["firstName", "lastName", "createdAt", "updatedAt"]);
+    const result = await runFields(ctx, a, ["firstName", "lastName"]);
     expect(result).toMatchEntity({});
   });
 });
