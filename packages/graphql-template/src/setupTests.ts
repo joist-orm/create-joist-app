@@ -25,7 +25,7 @@ afterAll(async () => {
 
 export function newEm(): EntityManager {
   const driver = new PostgresDriver(pool);
-  const ctx = { pool, em: null as any } satisfies Context;
+  const ctx = { pool, driver, em: null as any } satisfies Context;
   const em = new EntityManager(ctx, driver);
   Object.assign(ctx, { em });
   return em;
