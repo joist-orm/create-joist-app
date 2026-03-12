@@ -15,16 +15,12 @@ export function createDockerCompose(projectPath: string, dbConfig: DbConfig): vo
       POSTGRES_PASSWORD: ${dbConfig.password}
       POSTGRES_DB: ${dbConfig.name}
     command: ["postgres", "-c", "fsync=off", "-c", "log_statement=all"]
-    volumes:
-      - db_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${dbConfig.user} -d ${dbConfig.name}"]
       interval: 5s
       timeout: 5s
       retries: 5
 
-volumes:
-  db_data:
 `;
   fs.writeFileSync(path.join(projectPath, "docker-compose.yml"), dockerCompose);
 }
