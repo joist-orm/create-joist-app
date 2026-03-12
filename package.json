@@ -28,7 +28,7 @@
     "tsx": "^4.21.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22.0.0"
   },
   "packageManager": "yarn@4.12.0"
 }

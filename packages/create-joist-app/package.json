@@ -31,7 +31,7 @@
     "format": "prettier --write 'src/**/*.{ts,js}'"
   },
   "dependencies": {
-    "commander": "^12.1.0",
+    "commander": "^14.0.3",
     "picocolors": "^1.1.1",
     "prompts": "^2.4.2",
     "validate-npm-package-name": "^6.0.2"
@@ -50,6 +50,6 @@
     "typescript": "5.9.3"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22.0.0"
   }
 }
