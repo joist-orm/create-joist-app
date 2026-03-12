@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/joist-orm/create-joist-app/compare/v1.0.2...v1.0.3) (2026-03-12)
+
+
+### Bug Fixes
+
+* Remove db volume. ([#1](https://github.com/joist-orm/create-joist-app/issues/1)) ([1f7dd05](https://github.com/joist-orm/create-joist-app/commit/1f7dd05be588c4075f94d534a832a3f2c178ed64))
+
 ## [1.0.2](https://github.com/joist-orm/create-joist-app/compare/v1.0.1...v1.0.2) (2026-03-10)
 
 
