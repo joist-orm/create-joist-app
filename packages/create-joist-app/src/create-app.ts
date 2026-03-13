@@ -75,11 +75,14 @@ export async function createApp(options: CreateAppOptions): Promise<void> {
   // Generate db.dockerfile
   createDbDockerfile(projectPath);
 
-  // Replace the template package name with the user's project name in all text files.
+  // Replace template sentinels with the user's project name in all text files.
   // DB values are NOT replaced via sentinel matching (too fragile — "joist" appears in
   // package names). Instead, .env, docker-compose.yml, db.dockerfile, and package.json
   // scripts are all generated/updated inline above and below.
-  replaceSentinelValues(projectPath, { [templatePkgName]: projectName });
+  replaceSentinelValues(projectPath, {
+    [templatePkgName]: projectName,
+    "{{PROJECT_NAME}}": projectName,
+  });
 
   // Update package.json with project name and add scaffolding scripts
   updatePackageJson(projectPath, projectName);
