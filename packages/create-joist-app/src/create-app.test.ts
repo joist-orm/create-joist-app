@@ -88,6 +88,11 @@ describe("createApp", () => {
       const dockerCompose = fs.readFileSync(path.join(projectPath, "docker-compose.yml"), "utf-8");
       expect(dockerCompose).toContain("my_app_user");
       expect(dockerCompose).toContain("my_app_db");
+
+      // Check README has project name
+      const readme = fs.readFileSync(path.join(projectPath, "README.md"), "utf-8");
+      expect(readme).toContain("# my-app");
+      expect(readme).not.toContain("{{PROJECT_NAME}}");
     });
 
     it("does not create .yarnrc.yml for npm", async () => {
@@ -165,9 +170,7 @@ describe("createApp", () => {
         },
       });
 
-      const joistConfig = JSON.parse(
-        fs.readFileSync(path.join(projectPath, "joist-config.json"), "utf-8"),
-      );
+      const joistConfig = JSON.parse(fs.readFileSync(path.join(projectPath, "joist-config.json"), "utf-8"));
       expect(joistConfig.codegenPlugins).toContain("joist-graphql-codegen");
     });
 
@@ -193,6 +196,30 @@ describe("createApp", () => {
       const pkgJson = JSON.parse(fs.readFileSync(path.join(projectPath, "package.json"), "utf-8"));
       expect(pkgJson.dependencies["@apollo/server"]).toBeDefined();
       expect(pkgJson.dependencies["graphql"]).toBeDefined();
+    });
+
+    it("substitutes project name in README", async () => {
+      const projectPath = path.join(tempDir, "my-graphql-app");
+      fs.mkdirSync(projectPath);
+
+      await createApp({
+        projectPath,
+        projectName: "my-graphql-app",
+        template: "graphql",
+        packageManager: "yarn",
+        skipInstall: true,
+        dbConfig: {
+          host: "localhost",
+          port: "5432",
+          user: "test_user",
+          password: "test_password",
+          name: "test_db",
+        },
+      });
+
+      const readme = fs.readFileSync(path.join(projectPath, "README.md"), "utf-8");
+      expect(readme).toContain("# my-graphql-app");
+      expect(readme).not.toContain("{{PROJECT_NAME}}");
     });
   });
 });
