@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/joist-orm/create-joist-app/compare/v1.0.7...v1.0.8) (2026-03-14)
+
+
+### Bug Fixes
+
+* Replace the name token in readme.md. ([#6](https://github.com/joist-orm/create-joist-app/issues/6)) ([72234ae](https://github.com/joist-orm/create-joist-app/commit/72234ae0488603bec8aea5a197524ad1150e77b0))
+
 ## [1.0.7](https://github.com/joist-orm/create-joist-app/compare/v1.0.6...v1.0.7) (2026-03-12)
 
 
