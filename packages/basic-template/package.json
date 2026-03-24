@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@types/pg": "^8.18.0",
-    "joist-orm": "2.0.3-next.38",
+    "joist-orm": "2.1.0",
     "pg": "^8.16.3"
   },
   "devDependencies": {
