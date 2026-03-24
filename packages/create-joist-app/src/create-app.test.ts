@@ -77,6 +77,12 @@ describe("createApp", () => {
       // Check package.json has project name
       const pkgJson = JSON.parse(fs.readFileSync(path.join(projectPath, "package.json"), "utf-8"));
       expect(pkgJson.name).toBe("my-app");
+      expect(pkgJson.scripts).toMatchObject({
+        db: "docker compose up -d --wait db && yarn migrate && yarn codegen",
+        redb: "docker compose up --wait db && docker compose exec db ./reset.sh && yarn migrate && yarn codegen",
+        migrate: "env-cmd joist-pg-migrate",
+        "migrate:new": "env-cmd joist-pg-migrate create",
+      });
 
       // Check .env has correct database URL
       const envContent = fs.readFileSync(path.join(projectPath, ".env"), "utf-8");

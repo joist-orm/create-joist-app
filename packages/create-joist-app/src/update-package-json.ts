@@ -10,7 +10,7 @@ export function updatePackageJson(projectPath: string, projectName: string): voi
   pkgJson.scripts = {
     ...pkgJson.scripts,
     db: "docker compose up -d --wait db && yarn migrate && yarn codegen",
-    redb: "docker compose exec db ./reset.sh && yarn migrate && yarn codegen",
+    redb: "docker compose up --wait db && docker compose exec db ./reset.sh && yarn migrate && yarn codegen",
     migrate: "env-cmd joist-pg-migrate",
     "migrate:new": "env-cmd joist-pg-migrate create",
   };
